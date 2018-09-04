@@ -1,0 +1,52 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Orchestration Demo API",
+    "version": "1.0"
+  },
+  "host": "example.com",
+  "paths": {
+    "/demo": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "param1",
+            "type": "string"
+          }
+        ],
+        "x-flow": "orchestrationDemoApi-getDemo"
+      }
+    },
+    "/demo2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "demo",
+            "type": "string"
+          }
+        ],
+        "x-flow": "orchestrationDemoApi-getDemo2"
+      }
+    }
+  }
+}

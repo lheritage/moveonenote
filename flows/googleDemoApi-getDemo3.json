@@ -1,0 +1,140 @@
+{
+	"schemaVersion": "3",
+	"info": {
+		"name": "getDemo3"
+	},
+	"parameter": {
+		"properties": {
+			"params": {
+				"type": "object",
+				"description": "The parameters from the endpoint."
+			},
+			"request": {
+				"type": "object",
+				"description": "The HTTP request."
+			},
+			"config": {
+				"type": "object",
+				"description": "The service's configuration"
+			},
+			"env": {
+				"type": "object",
+				"description": "The host OS environment"
+			}
+		},
+		"additionalProperties": false,
+		"required": [
+			"params",
+			"request",
+			"config",
+			"env"
+		]
+	},
+	"start": "doT.1",
+	"nodes": {
+		"http.setresponse.1": {
+			"type": "nodehandler://axway-flow/http",
+			"method": "setresponse",
+			"name": "Set HTTP Response",
+			"parameters": [
+				{
+					"name": "status",
+					"value": "200",
+					"type": "number"
+				},
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.response"
+				}
+			],
+			"outputs": {
+				"next": {
+					"context": "$.response"
+				}
+			}
+		},
+		"api-builder-plugin-sc-googledrive.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-sc-googledrive/@axway/api-builder-plugin-sc-googledrive",
+			"name": "createFolder",
+			"method": "createFolder",
+			"parameters": [
+				{
+					"name": "body",
+					"type": "jsonpath",
+					"value": "$.value"
+				},
+				{
+					"name": "x-vendor-authorization",
+					"type": "string",
+					"value": "\"ya29.GlwJBtZrMxhDZ2iT_6bFu91YGK1BEBtRy7k-V-dAB8rfZjBH-UlhVBU0vZEoEukEX8y67mWckItfNGKwwaMK5Oe6q2a6MzVkuTl9U7b5k6dom-Z8LZ7rC8Sq6R-LtQ\""
+				}
+			],
+			"outputs": {
+				"200": {
+					"routes": [
+						"http.setresponse.1"
+					],
+					"context": "$.response"
+				},
+				"400": {
+					"routes": [],
+					"context": "$.error"
+				},
+				"401": {
+					"routes": [],
+					"context": "$.error"
+				},
+				"403": {
+					"routes": [],
+					"context": "$.error"
+				},
+				"405": {
+					"routes": [],
+					"context": "$.error"
+				},
+				"409": {
+					"routes": [],
+					"context": "$.error"
+				},
+				"500": {
+					"routes": [],
+					"context": "$.error"
+				},
+				"502": {
+					"routes": [],
+					"context": "$.error"
+				}
+			}
+		},
+		"doT.1": {
+			"type": "nodehandler://@axway/api-builder-plugin-fn-dot/doT",
+			"name": "Format object",
+			"method": "formatObj",
+			"parameters": [
+				{
+					"name": "data",
+					"type": "jsonpath",
+					"value": "$.params"
+				},
+				{
+					"name": "template",
+					"type": "string",
+					"value": "\"{\\n  \\\"name\\\" : \\\"{{=it.demo}}\\\",\\n  \\\"mimeType\\\" : \\\"application/vnd.google-apps.folder\\\"\\n \\n}\""
+				}
+			],
+			"outputs": {
+				"next": {
+					"routes": [
+						"api-builder-plugin-sc-googledrive.1"
+					],
+					"context": "$.value"
+				},
+				"error": {
+					"routes": [],
+					"context": "$.error"
+				}
+			}
+		}
+	}
+}

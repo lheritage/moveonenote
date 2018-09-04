@@ -1,0 +1,31 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Google Demo API",
+    "version": "1.0"
+  },
+  "host": "example.com",
+  "paths": {
+    "/demo3": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "demo",
+            "type": "string"
+          }
+        ],
+        "x-flow": "googleDemoApi-getDemo3"
+      }
+    }
+  }
+}

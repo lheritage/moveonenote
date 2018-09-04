@@ -1,0 +1,36 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My One Drive API",
+    "version": "1.0"
+  },
+  "host": "example.com",
+  "paths": {
+    "/file": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filename",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "token",
+            "type": "string"
+          }
+        ],
+        "x-flow": "myOneDriveApi-getFile"
+      }
+    }
+  }
+}
